@@ -1,0 +1,18 @@
+plugins {
+    id("org.jetbrains.kotlin.jvm") version "1.9.22"
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+tasks.named('wrapper') {
+    gradleVersion = "${gradle_version}"
+    distributionType = Wrapper.DistributionType.ALL
+}
+
+dependencies {
+    implementation "io.arrow-kt:arrow-core:1.2.0"
+}
