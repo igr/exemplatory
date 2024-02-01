@@ -6,6 +6,8 @@ This collection features small, exemplary tasks aimed at exploring various facet
 
 1. ⏱️ [**StopWatch**](./stopwatch/README.md)
 2. 🏨 [**Hotel**](./hotel/README.md)
+3. ⚔️ [**Hero vs Monsters**](https://github.com/igr/hero-vs-monsters)
+4. 🧸 Toy Story (TBA)
 
 ## Additional notes
 
