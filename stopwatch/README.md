@@ -23,3 +23,7 @@ Read the [../Guidelines.md](../Guidelines.md) for more information about coding 
 ⭐️ [kt-types](kt-types) (by @igr)
 
 > Solution with data types only: no functions or methods whatsoever! Interesting: this approach is focused on state snapshots, and not operations (methods or functions). Uses ADT (algebraic data types) to model state transitions - although may not be necessary in this case.
+
+⭐️ [haskell](haskell) (by @igr)
+
+> And now, the same solution in Haskell. The code is much more concise, and the state transitions are modeled using pattern matching. The code is pure, and the state is immutable. The code is also very readable and easy to understand.
