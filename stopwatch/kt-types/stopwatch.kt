@@ -1,17 +1,19 @@
-class StartedStopwatch() {
-    internal val startTime = System.currentTimeMillis()
-}
+sealed class Stopwatch {
 
-data class StoppedStopwatch(
-    val startedStopwatch: StartedStopwatch,
-) {
-    private val stopTime = System.currentTimeMillis()
-    val elapsed: Long = stopTime - startedStopwatch.startTime
+    class Started() : Stopwatch() {
+        internal val startTime = System.currentTimeMillis()
+    }
+    data class Stopped(
+        val startedStopwatch: Started,
+    ) : Stopwatch() {
+        private val stopTime = System.currentTimeMillis()
+        val elapsed: Long = stopTime - startedStopwatch.startTime
+    }
 }
 
 fun main() {
-    val startedStopwatch = StartedStopwatch()
+    val startedStopwatch = Stopwatch.Started()
     Thread.sleep(1000)
-    val stoppedStopwatch = StoppedStopwatch(startedStopwatch)
+    val stoppedStopwatch = Stopwatch.Stopped(startedStopwatch)
     println(stoppedStopwatch.elapsed)
 }

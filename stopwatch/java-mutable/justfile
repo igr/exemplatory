@@ -4,5 +4,6 @@ run: clean
     javac Run.java StopWatch.java
     java -cp . Run
 
+# Cleans up
 clean:
     rm *.class
