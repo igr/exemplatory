@@ -1,0 +1,6 @@
+run: clean
+    kotlinc stopwatch.kt -include-runtime -d run.jar
+    java -jar run.jar
+
+clean:
+    rm -f run.jar

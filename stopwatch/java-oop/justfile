@@ -1,0 +1,8 @@
+
+# Runs example
+run: clean
+    javac Run.java StopWatch.java
+    java -cp . Run
+
+clean:
+    rm *.class
