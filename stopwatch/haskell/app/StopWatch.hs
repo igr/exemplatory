@@ -10,18 +10,16 @@ import Data.Time.Clock (UTCTime, getCurrentTime, diffUTCTime)
 data Stopwatch = Running UTCTime | Stopped UTCTime UTCTime
     deriving (Eq, Show)
 
--- |Starts the stopwatch. If the stopwatch is already running, it resets the start time.
+-- Starts the stopwatch. If the stopwatch is already running, it resets the start time.
 startStopwatch :: IO Stopwatch
-startStopwatch = getCurrentTime >>= return . Running
+startStopwatch = Running <$> getCurrentTime
 
--- |Stops the stopwatch and records the stop time. If the stopwatch is already stopped, this does nothing.
+-- Stops the stopwatch and records the stop time. If the stopwatch is already stopped, this does nothing.
 stopStopwatch :: Stopwatch -> IO Stopwatch
-stopStopwatch (Running startTime) = do
-    stopTime <- getCurrentTime
-    return $ Stopped startTime stopTime
+stopStopwatch (Running startTime) = Stopped startTime <$> getCurrentTime
 stopStopwatch stopwatch@(Stopped _ _) = return stopwatch
 
--- |Reads the elapsed time from the stopwatch in seconds. If the stopwatch is running, it calculates the time until now.
+-- Reads the elapsed time from the stopwatch in seconds. If the stopwatch is running, it calculates the time until now.
 readStopwatch :: Stopwatch -> IO Double
 readStopwatch (Running startTime) = do
     currentTime <- getCurrentTime

@@ -26,4 +26,4 @@ Read the [../Guidelines.md](../Guidelines.md) for more information about coding 
 
 ⭐️ [haskell](haskell) (by @igr)
 
-> And now, the same solution in Haskell. The code is much more concise, and the state transitions are modeled using pattern matching. The code is pure, and the state is immutable. The code is also very readable and easy to understand.
+> And now, the same solution in Haskell. The code is much more concise, and the state transitions are modeled using pattern matching. The code is pure (with IO effect), and the state is immutable. The code is also very readable and easy to understand.
