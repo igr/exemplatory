@@ -1,4 +1,4 @@
-# Guidlines
+# Guidelines
 
 + You may use any programming language you want.
 + You must provide a [justfile](https://github.com/casey/just) or [makefile](https://www.gnu.org/software/make/manual/make.html) to run your solution (e.g. `just run` or `make run`). Assume that the language you choose is installed on the system.
