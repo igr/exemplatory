@@ -26,4 +26,10 @@ Read the [../Guidelines.md](../Guidelines.md) for more information about coding 
 
 ⭐️ [haskell](haskell) (by @igr)
 
-> And now, the same solution in Haskell. The code is much more concise, and the state transitions are modeled using pattern matching. The code is pure (with IO effect), and the state is immutable. The code is also very readable and easy to understand.
+> And now, the same solution in Haskell. The code is much more concise, and the state transitions are modeled using pattern matching. The code is not pure (since the IO effect), and the state is immutable. The code is also very readable and easy to understand.
+
+⭐️ [haskell-mtl](haskell-mtl) (by @igr)
+
+> This time, IO is abstracted using the `mtl` library. The implementation is defined at use; however, it would make an orphan instance. Instead, new wrapper type is created with the `newtype`.
+
+🧧 Contribute.

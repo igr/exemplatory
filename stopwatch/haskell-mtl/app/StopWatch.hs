@@ -1,21 +1,16 @@
-{-# LANGUAGE InstanceSigs #-}
 
 module StopWatch (
     Stopwatch,
     startStopwatch,
     stopStopwatch,
-    readStopwatch
+    readStopwatch,
+    MonadTime(currentTime),
 ) where
 
-import Data.Time.Clock ( getCurrentTime, UTCTime, diffUTCTime )
+import Data.Time.Clock (UTCTime, diffUTCTime)
 
 class Monad m => MonadTime m where
     currentTime :: m UTCTime
-
--- IO instance for MonadTime
-instance MonadTime IO where
-    currentTime :: IO UTCTime
-    currentTime = Data.Time.Clock.getCurrentTime
 
 data Stopwatch = Running UTCTime | Stopped UTCTime UTCTime
     deriving (Eq, Show)
