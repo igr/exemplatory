@@ -4,6 +4,8 @@ Determine _boundaries_ from the described Hotel management requirements.
 
 N.B. we don't look for running code, just boundaries.
 
+(Example is from training organized by _Particular_.)
+
 ## Requirements
 
 Rules (to simplify):
