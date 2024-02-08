@@ -16,6 +16,7 @@ Requirements:
 - adding a new statistic must be code-driven as much as possible.
 - the result is a simple aggregate of the results.
 - you can not use reflection.
+- again, keep in mind that the list of statistics is much longer than in the example.
 
 Goals:
 
