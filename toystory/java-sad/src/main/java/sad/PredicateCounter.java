@@ -1,8 +1,9 @@
 package sad;
 
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class PredicateCounter<T> {
+public class PredicateCounter<T> implements Consumer<T> {
 	private final Predicate<T> predicate;
 	private int count = 0;
 
@@ -10,13 +11,7 @@ public class PredicateCounter<T> {
 		this.predicate = predicate;
 	}
 
-	public void process(T t) {
-		if (predicate.test(t)) {
-			count++;
-		}
-	}
-
-	public int count() {
+    public int count() {
 		return count;
 	}
 
@@ -24,4 +19,10 @@ public class PredicateCounter<T> {
 		return new PredicateCounter<>(predicate);
 	}
 
+    @Override
+    public void accept(T t) {
+        if (predicate.test(t)) {
+            count++;
+        }
+    }
 }

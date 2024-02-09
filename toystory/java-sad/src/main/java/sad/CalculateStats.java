@@ -12,8 +12,7 @@ public class CalculateStats implements Consumer<Toy>, Supplier<ToysStats> {
 
     @Override
     public void accept(Toy toy) {
-        counters.forEach(counter -> counter.process(toy));
-        colorsCount.computeIfAbsent(toy.color(), k -> new AtomicInteger(0)).incrementAndGet();
+        counters.forEach(counter -> counter.accept(toy));
     }
 
     // builds a final stats object
@@ -24,7 +23,7 @@ public class CalculateStats implements Consumer<Toy>, Supplier<ToysStats> {
             total.count(),
             totalBlue.count(),
             totalExpensiveAndBroken.count(),
-            mapOf(colorsCount)
+            colorDistribution.distributionMap()
         );
     }
 
@@ -44,17 +43,15 @@ public class CalculateStats implements Consumer<Toy>, Supplier<ToysStats> {
         PredicateCounter.of(toy -> toy.color() == Toy.Color.BLUE);
     private final PredicateCounter<Toy> totalExpensiveAndBroken =
         PredicateCounter.of(toy -> toy.broken() && toy.price() > 10);
+    private final ColorDistribution colorDistribution = new ColorDistribution();
 
     // manually managed list of counters
 
-    private final List<PredicateCounter<Toy>> counters = List.of(
+    private final List<Consumer<Toy>> counters = List.of(
         total,
         totalBlue,
-        totalExpensiveAndBroken
+        totalExpensiveAndBroken,
+        colorDistribution
     );
-
-    // maps for distributions
-    private final Map<Toy.Color, AtomicInteger> colorsCount =
-        new EnumMap<>(Toy.Color.class);
 
 }

@@ -30,10 +30,10 @@ Read the [../Guidelines.md](../Guidelines.md) for more information about coding 
 
 ## Solutions
 
-⭐️ [java-sad](java-sad) (by @igr)
+⭐️ [java-sad](java-sad) (by @igr, improvements by @bojanantonovic 🚀)
 
-> Sad solution in Java. We can encapsulate individual rules (predicate with the counter).
+> Solution in Java. We can encapsulate individual rules (predicate with the counter).
   However, adding a new rule does not force the developer to apply it at all places.
   There are 3 actions developer have to modify on adding a new rule. The one with the
-  highest cognitive load is the `ToyStatis` class. The developer has to carefully follow the
+  highest cognitive load is the `ToyStats` class. The developer has to carefully follow the
   order of the attributes and map the values to the correct attributes.
