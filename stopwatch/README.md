@@ -32,4 +32,9 @@ Read the [../Guidelines.md](../Guidelines.md) for more information about coding 
 
 > This time, IO is abstracted using the `mtl` library. The implementation is defined at use; however, it would make an orphan instance. Instead, new wrapper type is created with the `newtype`.
 
+⭐️ [haskell-2](haskell-2) (by help from Reddit)
+
+> Better approach than previous.
+
+
 🧧 Contribute.
