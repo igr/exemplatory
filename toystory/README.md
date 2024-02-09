@@ -24,6 +24,8 @@ Goals:
 > If you add a new statistic, how many places in the code you need to change? Can it be just one?
 > Can you add a new statistic calculation and force the developer to apply it at all right places?
 
+⚠️ Important note: the purpose of this example is NOT to calculate the results. Yes, you will probably use DB, or whatever. The focus here is the _capabilities of the programming languages_.
+
 Read the [../Guidelines.md](../Guidelines.md) for more information about coding style, naming, etc.
 
 ## Solutions
