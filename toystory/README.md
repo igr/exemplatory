@@ -40,4 +40,4 @@ Read the [../Guidelines.md](../Guidelines.md) for more information about coding 
 
 ⭐️ [haskell](haskell) (by @igr)
 
-> Haskell solution. Immutable and pure. It directly updates the stats (i.e. creates a new state from previous). Quite compact and elegant.
+> Haskell solution. Immutable and pure. It directly updates the stats (i.e. creates a new state from    previous). Quite compact and elegant. Added `newtype`s for better type safety - you can't mix up the order of the attributes. We could use lenses for easiler updates, but it's not necessary for this example.
