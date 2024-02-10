@@ -37,3 +37,7 @@ Read the [../Guidelines.md](../Guidelines.md) for more information about coding 
   There are 3 actions developer have to modify on adding a new rule. The one with the
   highest cognitive load is the `ToyStats` class. The developer has to carefully follow the
   order of the attributes and map the values to the correct attributes.
+
+⭐️ [haskell](haskell) (by @igr)
+
+> Haskell solution. Immutable and pure. It directly updates the stats (i.e. creates a new state from previous). Quite compact and elegant.

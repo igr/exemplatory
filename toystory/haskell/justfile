@@ -1,0 +1,6 @@
+
+run: clean
+    stack run
+
+clean:
+    stack clean
