@@ -60,3 +60,5 @@ Domain rules:
 ⭐️ [kt-fns](kt-fns) (by @igr)
 
 > Idea of mine. The process of grouping is done in 2 steps. First, we write down all the functions signatures and data types from the requirements. Put as less details as possible, and no implementation. Then, we start grouping. Just by observing the input and output types, we can see that some functions are related to each other. We can group them together. We don't even have to take into the account the function names, just types. There is no one way to do it, however, there might be a statistical solution that can be applied to this problem.
+
+🧧 Contribute.

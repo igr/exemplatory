@@ -1,6 +1,6 @@
 # ToyStory 🧸
 
-Your task is to calculate various statistics on the set of toys in one loop. We are assuming a lot of records (e.g. from database), so we don't want to loop over the data multiple times. For the simplicity, we are using a list of toys instead of a database. You can use data from the file `toys.csv` - but you don't have to load it in the application, you can just copy the data to the code.
+Your task is to calculate various statistics on the set of toys in one loop. We are assuming a lot of records (e.g. from database or files), so we don't want to loop over the data multiple times. For the simplicity, we are using a list of toys instead of a database. You can use data from the file `toys.csv` - but you don't have to load it in the application, you can just copy the data to the code.
 
 Statistics to calculate:
 
@@ -21,8 +21,8 @@ Requirements:
 
 Goals:
 
-> If you add a new statistic, how many places in the code you need to change? Can it be just one?
-> Can you add a new statistic calculation and force the developer to apply it at all right places?
++ If you add a new statistic, how many places in the code you need to change? Can it be just one?
++ Can you add a new statistic calculation and force the developer to apply it at all right places?
 
 ⚠️ Important note: the purpose of this example is NOT to calculate the results. Yes, you will probably use DB, or whatever. The focus here is the _capabilities of the programming languages_.
 
@@ -40,4 +40,10 @@ Read the [../Guidelines.md](../Guidelines.md) for more information about coding 
 
 ⭐️ [haskell](haskell) (by @igr)
 
-> Haskell solution. Immutable and pure. It directly updates the stats (i.e. creates a new state from    previous). Quite compact and elegant. Added `newtype`s for better type safety - you can't mix up the order of the attributes. We could use lenses for easier updates, but it's not necessary for this example.
+> Haskell solution. Immutable and pure. It directly updates the stats (i.e. creates a new state from previous). Quite compact and elegant. Added `newtype`s for better type safety - you can't mix up the order of the attributes. We could use lenses for easier updates, but it's not necessary for this example.
+
+⭐️ [scala](scala) (by LI submission)
+
+> Scala solution.
+
+🧧 Contribute.
