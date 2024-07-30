@@ -2,13 +2,12 @@ module Main (
     main
 ) where
 
-data CellState = Live | Dead deriving (Eq, Ord, Show)
+data Cell = Live | Dead deriving (Eq, Ord)
 data Position = Position { xx :: Int, yy :: Int } deriving (Eq, Ord, Show)
-data Cell = Cell { position :: Position, state :: CellState } deriving (Eq, Ord)
 
 instance Show Cell where
-    show (Cell _ Live) = "*"
-    show (Cell _ Dead) = "."
+    show Live = "*"
+    show Dead = "."
 
 -- Define the size of the grid
 width, height :: Int
@@ -16,12 +15,12 @@ width = 10
 height = 10
 
 -- Initialize the grid with a default state
-initializeGrid :: (Position -> CellState) -> [[Cell]]
+initializeGrid :: (Position -> Cell) -> [[Cell]]
 initializeGrid getState =
-    [[ Cell (Position x y) (getState (Position x y)) | x <- [0..width-1]] | y <- [0..height-1]]
+    [[ getState (Position x y) | x <- [0..width-1]] | y <- [0..height-1]]
 
 -- Seed function that returns Live for positions where x + y is even, otherwise Dead
-seedStateFn :: Position -> CellState
+seedStateFn :: Position -> Cell
 seedStateFn (Position x y) = if even (x + y) then Live else Dead
 
 -- Collect the neighbors of a given cell
@@ -38,29 +37,27 @@ collectNeighbors (Position x y) =
 -- Count live neighbors of a given cell
 countLiveNeighbors :: [[Cell]] -> Position -> Int
 countLiveNeighbors grid pos =
-    length $ filter isLive $ map getCell (collectNeighbors pos)
+    length $ filter (== Live) $ map getCell (collectNeighbors pos)
   where
     getCell (Position nx ny) = grid !! ny !! nx
-    isLive (Cell _ Live) = True
-    isLive _ = False
 
 -- Determine the next state of a cell
-nextState :: Cell -> Int -> CellState
-nextState (Cell _ Live) liveNeighbors
+nextState :: Cell -> Int -> Cell
+nextState Live liveNeighbors
     | liveNeighbors < 2 = Dead
     | liveNeighbors == 2 || liveNeighbors == 3 = Live
     | liveNeighbors > 3 = Dead
-nextState (Cell _ Dead) liveNeighbors
+nextState Dead liveNeighbors
     | liveNeighbors == 3 = Live
     | otherwise = Dead
-nextState _ _ = Dead -- catch All
+nextState _ _ = error "Invalid state"   -- how come we don't have exhaustive pattern match above?
 
 -- Generate the next grid based
 nextGeneration :: [[Cell]] -> [[Cell]]
 nextGeneration grid =
-    [ [ Cell pos (nextState cell (countLiveNeighbors grid pos))
-      | cell@(Cell pos _) <- row ] -- for each cell in the row
-    | row <- grid ] -- for each row in the grid
+    [ [ nextState (grid !! y !! x) (countLiveNeighbors grid (Position x y))
+      | x <- [0..width-1] ] -- for each cell in the row
+    | y <- [0..height-1] ] -- for each row
 
 -- Create a grid
 buildGrid :: [[Cell]]
