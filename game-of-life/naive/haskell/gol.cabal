@@ -1,0 +1,34 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.36.0.
+--
+-- see: https://github.com/sol/hpack
+
+name:           gol
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/void#readme>
+homepage:       https://github.com/igr/exemplatory#readme
+bug-reports:    https://github.com/igr/exemplatory/issues
+author:         igor
+maintainer:     hask@igo.rs
+copyright:      2024 Igor Spasic
+license:        BSD-3-Clause
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: https://github.com/igr/exemplatory
+
+executable gol-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_gol
+  autogen-modules:
+      Paths_gol
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , containers >=0.6
+  default-language: Haskell2010

@@ -8,6 +8,7 @@ This collection features small, exemplary tasks aimed at exploring various facet
 2. 🏨 [**Hotel**](./hotel/README.md)
 3. ⚔️ [**Hero vs Monsters**](https://github.com/igr/hero-vs-monsters)
 4. 🧸 [**Toy Story**](./toystory/README.md)
+5. 👾 [**Game Of Life**](game-of-life)
 
 ## Additional notes
 

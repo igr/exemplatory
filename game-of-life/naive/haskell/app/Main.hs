@@ -1,0 +1,89 @@
+module Main (
+    main
+) where
+
+data CellState = Live | Dead deriving (Eq, Ord, Show)
+data Position = Position { xx :: Int, yy :: Int } deriving (Eq, Ord, Show)
+data Cell = Cell { position :: Position, state :: CellState } deriving (Eq, Ord)
+
+instance Show Cell where
+    show (Cell _ Live) = "*"
+    show (Cell _ Dead) = "."
+
+-- Define the size of the grid
+width, height :: Int
+width = 10
+height = 10
+
+-- Initialize the grid with a default state
+initializeGrid :: (Position -> CellState) -> [[Cell]]
+initializeGrid getState =
+    [[ Cell (Position x y) (getState (Position x y)) | x <- [0..width-1]] | y <- [0..height-1]]
+
+-- Seed function that returns Live for positions where x + y is even, otherwise Dead
+seedStateFn :: Position -> CellState
+seedStateFn (Position x y) = if even (x + y) then Live else Dead
+
+-- Collect the neighbors of a given cell
+collectNeighbors :: Position -> [Position]
+collectNeighbors (Position x y) =
+    [ Position (x + dx) (y + dy)
+    | dx <- [-1, 0, 1]
+    , dy <- [-1, 0, 1]      -- all 8 neighbors
+    , (dx, dy) /= (0, 0)    -- skip the cell itself
+    , x + dx >= 0, x + dx < width   -- ensure grid boundaries
+    , y + dy >= 0, y + dy < height
+    ]
+
+-- Count live neighbors of a given cell
+countLiveNeighbors :: [[Cell]] -> Position -> Int
+countLiveNeighbors grid pos =
+    length $ filter isLive $ map getCell (collectNeighbors pos)
+  where
+    getCell (Position nx ny) = grid !! ny !! nx
+    isLive (Cell _ Live) = True
+    isLive _ = False
+
+-- Determine the next state of a cell
+nextState :: Cell -> Int -> CellState
+nextState (Cell _ Live) liveNeighbors
+    | liveNeighbors < 2 = Dead
+    | liveNeighbors == 2 || liveNeighbors == 3 = Live
+    | liveNeighbors > 3 = Dead
+nextState (Cell _ Dead) liveNeighbors
+    | liveNeighbors == 3 = Live
+    | otherwise = Dead
+nextState _ _ = Dead -- catch All
+
+-- Generate the next grid based
+nextGeneration :: [[Cell]] -> [[Cell]]
+nextGeneration grid =
+    [ [ Cell pos (nextState cell (countLiveNeighbors grid pos))
+      | cell@(Cell pos _) <- row ] -- for each cell in the row
+    | row <- grid ] -- for each row in the grid
+
+-- Create a grid
+buildGrid :: [[Cell]]
+buildGrid = initializeGrid seedStateFn
+
+-- Print the grid for visualization
+printGrid :: [[Cell]] -> IO ()
+printGrid = mapM_ (putStrLn . concatMap show)
+
+-- Generate and print N generations
+goLife :: Int -> [[Cell]] -> IO ()
+goLife 0 _ = return ()
+goLife n grid = do
+    let nextGrid = nextGeneration grid
+    putStrLn $ "\nGeneration " ++ show (n + 1) ++ ":"
+    printGrid nextGrid
+    goLife (n - 1) nextGrid
+
+
+main :: IO ()
+main = do
+    let grid' = buildGrid
+    let numGenerations = 5
+    goLife numGenerations grid'
+    putStrLn "\nSeed Grid:"
+    printGrid grid'
