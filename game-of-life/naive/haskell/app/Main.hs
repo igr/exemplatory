@@ -68,19 +68,19 @@ printGrid :: [[Cell]] -> IO ()
 printGrid = mapM_ (putStrLn . concatMap show)
 
 -- Generate and print N generations
-goLife :: Int -> [[Cell]] -> IO ()
-goLife 0 _ = return ()
-goLife n grid = do
+goLife :: Int -> Int -> [[Cell]] -> IO ()
+goLife _ 0 _ = return ()
+goLife maxGen n grid = do
     let nextGrid = nextGeneration grid
-    putStrLn $ "\nGeneration " ++ show (n + 1) ++ ":"
+    putStrLn $ "\nGeneration " ++ show (maxGen - n + 1) ++ ":"
     printGrid nextGrid
-    goLife (n - 1) nextGrid
+    goLife maxGen (n - 1) nextGrid
 
 
 main :: IO ()
 main = do
     let grid' = buildGrid
-    let numGenerations = 5
-    goLife numGenerations grid'
     putStrLn "\nSeed Grid:"
     printGrid grid'
+    let numGenerations = 6
+    goLife numGenerations numGenerations grid'
