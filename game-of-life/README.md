@@ -13,6 +13,10 @@ Your task is to generate `N` generations of a life game.
 
 ## Solutions
 
-⭐️ [naive/haskell](naive/haskell) (by @igr)
+⭐️ [haskell](haskell) (by @igr)
 
 > Simple implementation w/o any surprise. Holding a state in a double array, creating one generation after the another.
+
+⭐️ [actors](tatsugo) (by @igr)
+
+> Actor-alike implementation in my particles engine: Tatsugo. The code is understandable, even if you never saw the engine.
