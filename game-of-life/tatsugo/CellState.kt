@@ -60,27 +60,22 @@ data class CellData(
 }
 
 /**
- * Finally, the state of a cell. It is a list of [CellData]
- * that represents the state of the cell in each generation up to the latest.
- * We didn't have to create a separate class for this, but it makes data state
- * separated.
+ * Finally, the state of a cell.
+ * It is a KV of [CellData] that represents the state of the
+ * cell in each generation up to the latest.
+ * Note: no need to use a concurrent map(!)
  */
 data class CellState(
-	private val history: List<CellData>
+	private val db: MutableMap<Int, CellData> = mutableMapOf(),
+	private val max: Int
 ) {
 
-	fun update(iteration: Int, cellDataUpdater: (CellData) -> CellData): CellState {
-		if (iteration == history.size) {
-			// append
-			val new = cellDataUpdater(history.last())
-			return this.copy(history = history + new)
-		}
-		// replace
-		val new = cellDataUpdater(history[iteration])
-		return this.copy(history = history.mapIndexed { index, cellData ->
-			if (index == iteration) new else cellData
-		})
+	fun update(generation: Int, cellDataUpdater: (CellData) -> CellData): CellState {
+		val existing = db.computeIfAbsent(generation) { CellData(CellStatus.Dead, 0, 0, max) }
+		val new = cellDataUpdater(existing)
+		db[generation] = new
+		return this
 	}
 
-	operator fun get(index: Int): CellData = history[index]
+	operator fun get(index: Int): CellData = db[index] ?: throw IllegalArgumentException("No data for generation $index")
 }

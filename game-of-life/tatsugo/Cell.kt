@@ -3,7 +3,6 @@ package example.gol
 import example.gol.Cell.InitialState
 import example.gol.Cell.Msg
 import tatsugo.FleetRef
-import tatsugo.Mutable
 import tatsugo.Particle
 import tatsugo.ParticleAddress
 
@@ -28,19 +27,18 @@ class Cell(
 	data class InitialState(
 		val cellStatus: CellStatus,
 		val gridSize: Int,
-	) : Msg, Mutable
+	) : Msg
 	data class AcceptNeighbourStatus(
 		val generation: Int,
 		val status: CellStatus
-	): Msg, Mutable
+	): Msg
 
 	companion object {
 		fun new(fleetRef: FleetRef, address: ParticleAddress, max: Int): Cell {
-			val initialCellData = CellData(CellStatus.Dead, 0, 0, max)
 			return Cell(
 				address,
 				fleetRef,
-				CellState(listOf(initialCellData)),
+				CellState(max = max),
 				::initialBehaviour
 			)
 		}
@@ -58,7 +56,7 @@ suspend fun initialBehaviour(cell: Cell, msg: Msg): Cell {
 		is InitialState -> {
 			// generation 0, announce status to neighbours
 			val tickMsg = Grid.Tick(cell.fleetRef, pos.first, pos.second, 0, msg.cellStatus)
-			cell.fleetRef.send(tickMsg)
+			cell.fleetRef.send(Grid.address, tickMsg)
 
 			// update the status of the cell
 			val newState = state.update(0) { it.copy(status = msg.cellStatus) }
@@ -74,10 +72,6 @@ suspend fun initialBehaviour(cell: Cell, msg: Msg): Cell {
  */
 private suspend fun livingBehaviour(cell: Cell, msg: Msg): Cell {
 	return when (msg) {
-//		is Cell.Get -> {
-//			msg.replyRef.reply(cell.state[msg.generation].status)
-//			cell
-//		}
 		is Cell.AcceptNeighbourStatus -> {
 			val currentCell = cell.state[msg.generation]
 			val updatedCell = currentCell.addNeighbourStatus(msg.status)
@@ -89,7 +83,7 @@ private suspend fun livingBehaviour(cell: Cell, msg: Msg): Cell {
 				val position = addressToPosition(cell.address)
 
 				val tickMsg = Grid.Tick(cell.fleetRef, position.first, position.second, nextGeneration, newCell.status)
-				cell.fleetRef.send(tickMsg)
+				cell.fleetRef.send(Grid.address, tickMsg)
 
 				val newState = cell.state.update(nextGeneration) { newCell }
 				cell.to(newState, ::livingBehaviour)

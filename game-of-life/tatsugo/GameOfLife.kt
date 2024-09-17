@@ -4,34 +4,19 @@ import kotlinx.coroutines.coroutineScope
 import tatsugo.FleetRef
 import tatsugo.spawnFleet
 
-private const val SIZE = 11
+private const val SIZE = 21
 private const val MAX_GENERATIONS = 6
 
 suspend fun main(): Unit = coroutineScope {
-	val parallel = true
-	val fleetRef = if (parallel) spawnFleet(
+	val fleetRef = spawnFleet(
 		"cells",
 		this,
-		coroutineContext
 	) { ref, particleAddress ->
 		when (particleAddress) {
-			GRID_ADDR -> Grid.new(SIZE, MAX_GENERATIONS)
+			Grid.address -> Grid.new(SIZE, MAX_GENERATIONS)
 			else -> Cell.new(ref, particleAddress, calcMaxForAddress(particleAddress, SIZE))
 		}
 	}
-	else {
-		spawnFleet(
-			"cells",
-			this,
-		) { ref, particleAddress ->
-			when (particleAddress) {
-				GRID_ADDR -> Grid.new(SIZE, MAX_GENERATIONS)
-				else -> Cell.new(ref, particleAddress, calcMaxForAddress(particleAddress, SIZE))
-			}
-		}
-	}
-
-	println("Parallel: $parallel")
 	initializeGrid(fleetRef, SIZE)
 	println("Initial state sent")
 }
