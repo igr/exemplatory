@@ -17,4 +17,4 @@ This collection features small, exemplary tasks aimed at exploring various facet
 + [Guidelines](./Guidelines.md) for solution developers.
 + [License](./LICENSE.md).
 
-## 🧧 Contribute.
+## 🧧 Contribute
