@@ -11,7 +11,6 @@ public class CorgiDog implements CorgiDog4Game {
 
     // state
     private final CorgiDogRef ref;   // reference
-    private final CorgiName name;
     private int energy;
 
     // internals
@@ -20,9 +19,8 @@ public class CorgiDog implements CorgiDog4Game {
     // dependencies (channels)
     private final Garden4CorgiDog garden;
 
-    public CorgiDog(final CorgiDogRef ref, final CorgiName name, final Garden4CorgiDog garden) {
+    public CorgiDog(final CorgiDogRef ref, final Garden4CorgiDog garden) {
         this.ref = ref;
-        this.name = name;
         this.energy = 10;
 
         this.garden = garden;
@@ -41,6 +39,7 @@ public class CorgiDog implements CorgiDog4Game {
             case 3 -> LEFT;
             default -> throw new IllegalStateException("Invalid direction: " + random.nextInt());
         };
+
         final var moveResult = garden.corgiWantsToMove(ref, direction);
 
         switch (moveResult) {
@@ -54,6 +53,7 @@ public class CorgiDog implements CorgiDog4Game {
     }
 
     private void movedSuccessfully() {
+        // do nothing
     }
 
     private void bump() {

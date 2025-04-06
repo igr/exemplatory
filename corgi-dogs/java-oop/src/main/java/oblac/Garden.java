@@ -44,7 +44,14 @@ public class Garden implements Garden4CorgiDog, Garden4Game {
             return new MoveResult.StopOnBorder();
         }
 
-        // detect other dogs
+        return moveCorgi(corgiDog, newPosition);
+    }
+
+    /**
+     * Move and detect other dogs on new position.
+     */
+    protected MoveResult moveCorgi(final CorgiDogRef corgiDog, final Position newPosition) {
+        gameChannel.corgiDogMovedToNewPosition(corgiDog, newPosition);
         return dogs
             .stream()
             .filter(dp -> !dp.corgiDog.equals(corgiDog))
@@ -53,6 +60,7 @@ public class Garden implements Garden4CorgiDog, Garden4Game {
             .map(dp -> (MoveResult) new MoveResult.MovedToOccupiedPlace())
             .orElseGet(MoveResult.MovedToEmptyPlace::new);
     }
+
 
     @Override
     public void corgiFellAsleep(final CorgiDogRef corgiDog) {
