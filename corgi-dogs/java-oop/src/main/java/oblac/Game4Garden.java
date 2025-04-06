@@ -1,5 +1,5 @@
 package oblac;
 
-public interface GameChannel {
+public interface Game4Garden {
     void stopGame();
 }

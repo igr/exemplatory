@@ -2,34 +2,30 @@ package oblac;
 
 import java.util.Random;
 
-public class CorgiDog implements CorgiDogChannel {
+import static oblac.Garden4CorgiDog.Direction.DOWN;
+import static oblac.Garden4CorgiDog.Direction.LEFT;
+import static oblac.Garden4CorgiDog.Direction.RIGHT;
+import static oblac.Garden4CorgiDog.Direction.UP;
 
-    // reference
-    private final CorgiDogRef ref = CorgiDogRef.create();
+public class CorgiDog implements CorgiDog4Game {
 
     // state
-    private Position position;
-    private int energy;
+    private final CorgiDogRef ref;   // reference
     private final CorgiName name;
+    private int energy;
 
     // internals
     private final Random random = new Random();
 
     // dependencies (channels)
-    private final GardenChannel garden;
+    private final Garden4CorgiDog garden;
 
-    // event handler
-    private final CordiDogMoveListener listener;
-
-    public CorgiDog(final GardenChannel garden, final CorgiName name, final CordiDogMoveListener listener) {
-        this.energy = 10;
+    public CorgiDog(final CorgiDogRef ref, final CorgiName name, final Garden4CorgiDog garden) {
+        this.ref = ref;
         this.name = name;
-        this.listener = listener;
+        this.energy = 10;
 
         this.garden = garden;
-        this.position = garden.placeCorgiDog(ref);
-
-        listener.accept(name, position);
     }
 
     @Override
@@ -38,32 +34,26 @@ public class CorgiDog implements CorgiDogChannel {
             return;
         }
 
-        final int direction = random.nextInt(4);
-        var x = position.x();
-        var y = position.y();
-        switch (direction) {
-            case 0 -> x++;
-            case 1 -> x--;
-            case 2 -> y++;
-            case 3 -> y--;
-        }
-        final var newPosition = new Position(x, y);
-
-        final var moveResult = garden.corgiWantsToMove(ref, newPosition);
+        final var direction = switch (random.nextInt(4)) {
+            case 0 -> UP;
+            case 1 -> DOWN;
+            case 2 -> RIGHT;
+            case 3 -> LEFT;
+            default -> throw new IllegalStateException("Invalid direction: " + random.nextInt());
+        };
+        final var moveResult = garden.corgiWantsToMove(ref, direction);
 
         switch (moveResult) {
-            case final GardenChannel.MoveResult.StopOnBorder ignored ->{}
-            case final GardenChannel.MoveResult.MovedToEmptyPlace result -> movedSuccessfully(result.position());
-            case final GardenChannel.MoveResult.MovedToOccupiedPlace result -> {
-                movedSuccessfully(result.position());
+            case final Garden4CorgiDog.MoveResult.StopOnBorder nan ->{}
+            case final Garden4CorgiDog.MoveResult.MovedToEmptyPlace nan -> movedSuccessfully();
+            case final Garden4CorgiDog.MoveResult.MovedToOccupiedPlace nan -> {
+                movedSuccessfully();
                 bump();
             }
         }
     }
 
-    private void movedSuccessfully(final Position newPosition) {
-        this.position = newPosition;
-        listener.accept(this.name, newPosition);
+    private void movedSuccessfully() {
     }
 
     private void bump() {

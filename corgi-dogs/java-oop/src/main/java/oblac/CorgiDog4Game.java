@@ -1,5 +1,5 @@
 package oblac;
 
-public interface CorgiDogChannel {
+public interface CorgiDog4Game {
     void move();
 }
