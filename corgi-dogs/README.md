@@ -9,6 +9,6 @@ Corgi dogs are running in the Garden.
 + Each Corgi starts with `10` energy points.
 + Whenever a Corgi enters a cell that already contains one or more other Corgis, it loses `1` energy point. (Corgis already in the cell do not lose energy.)
 + When a Corgi’s energy reaches `0`, it falls asleep and is removed from the garden.
-
++ Since we love watching Corgis run, we want to print the Corgi’s name and new position every time a dog moves.
 
 ![](corgi-smirk.gif)
