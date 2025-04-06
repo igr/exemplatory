@@ -2,13 +2,7 @@ package oblac;
 
 import java.util.List;
 
-public class Game implements Game4Garden {
-
-    public static void main(final String[] args) {
-        final var game = new Game();
-        game.placeCorgis();
-        game.run();
-    }
+public class Game implements Game_for_Garden, Game_for_User {
 
     /**
      * This is required for the local state of the Game object.
@@ -41,20 +35,25 @@ public class Game implements Game4Garden {
         return new CorgiData(ref, corgiName, dog);
     }
 
+    @Override
     public void placeCorgis() {
         corgis.forEach(it -> garden.placeCorgiDog(it.ref));
     }
 
+    @Override
     public void run() {
         this.running = true;
         while (running) {
             corgis.stream()
                 .map(it -> it.corgiDog)
-                .forEach(CorgiDog4Game::move);
+                .forEach(CorgiDog_for_Game::move);  // it's imperative to use the channel here
         }
         System.out.println("Only one corgi dog left in the garden.");
     }
 
+    /**
+     * Event listener for stopped game.
+     */
     @Override
     public void stopGame() {
         running = false;

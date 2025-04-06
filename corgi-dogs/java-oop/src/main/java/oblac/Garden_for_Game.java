@@ -3,7 +3,7 @@ package oblac;
 /**
  * Channel: Game -> Garden.
  */
-public interface Garden4Game {
+public interface Garden_for_Game {
     /**
      * Command: Place a Corgi dog in the garden.
      */

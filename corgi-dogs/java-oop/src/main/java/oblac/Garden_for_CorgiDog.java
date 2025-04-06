@@ -3,7 +3,7 @@ package oblac;
 /**
  * Channel: CorgiDog -> Garden
  */
-public interface Garden4CorgiDog {
+public interface Garden_for_CorgiDog {
 
     enum Direction {
         UP, DOWN, LEFT, RIGHT

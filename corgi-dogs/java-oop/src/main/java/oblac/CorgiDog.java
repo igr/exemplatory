@@ -2,12 +2,12 @@ package oblac;
 
 import java.util.Random;
 
-import static oblac.Garden4CorgiDog.Direction.DOWN;
-import static oblac.Garden4CorgiDog.Direction.LEFT;
-import static oblac.Garden4CorgiDog.Direction.RIGHT;
-import static oblac.Garden4CorgiDog.Direction.UP;
+import static oblac.Garden_for_CorgiDog.Direction.DOWN;
+import static oblac.Garden_for_CorgiDog.Direction.LEFT;
+import static oblac.Garden_for_CorgiDog.Direction.RIGHT;
+import static oblac.Garden_for_CorgiDog.Direction.UP;
 
-public class CorgiDog implements CorgiDog4Game {
+public class CorgiDog implements CorgiDog_for_Game {
 
     // state
     private final CorgiDogRef ref;   // reference
@@ -17,9 +17,9 @@ public class CorgiDog implements CorgiDog4Game {
     private final Random random = new Random();
 
     // dependencies (channels)
-    private final Garden4CorgiDog garden;
+    private final Garden_for_CorgiDog garden;
 
-    public CorgiDog(final CorgiDogRef ref, final Garden4CorgiDog garden) {
+    public CorgiDog(final CorgiDogRef ref, final Garden_for_CorgiDog garden) {
         this.ref = ref;
         this.energy = 10;
 
@@ -43,9 +43,9 @@ public class CorgiDog implements CorgiDog4Game {
         final var moveResult = garden.corgiWantsToMove(ref, direction);
 
         switch (moveResult) {
-            case final Garden4CorgiDog.MoveResult.StopOnBorder nan ->{}
-            case final Garden4CorgiDog.MoveResult.MovedToEmptyPlace nan -> movedSuccessfully();
-            case final Garden4CorgiDog.MoveResult.MovedToOccupiedPlace nan -> {
+            case final Garden_for_CorgiDog.MoveResult.StopOnBorder nan ->{}
+            case final Garden_for_CorgiDog.MoveResult.MovedToEmptyPlace nan -> movedSuccessfully();
+            case final Garden_for_CorgiDog.MoveResult.MovedToOccupiedPlace nan -> {
                 movedSuccessfully();
                 bump();
             }

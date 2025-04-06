@@ -3,7 +3,7 @@ package oblac;
 /**
  * Channel: Garden -> Game.
  */
-public interface Game4Garden {
+public interface Game_for_Garden {
     /**
      * Command: stops the game.
      */

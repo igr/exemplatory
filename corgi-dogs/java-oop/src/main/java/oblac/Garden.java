@@ -4,12 +4,12 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class Garden implements Garden4CorgiDog, Garden4Game {
+public class Garden implements Garden_for_CorgiDog, Garden_for_Game {
 
     private record DogPosition(CorgiDogRef corgiDog, Position position) {}
 
     // dependencies
-    private final Game4Garden gameChannel;
+    private final Game_for_Garden gameChannel;
 
     // state
     private final int width = 3;
@@ -19,7 +19,7 @@ public class Garden implements Garden4CorgiDog, Garden4Game {
     // internals
     private final Random random = new Random();
 
-    public Garden(final Game4Garden gameChannel) {
+    public Garden(final Game_for_Garden gameChannel) {
         this.gameChannel = gameChannel;
     }
 
