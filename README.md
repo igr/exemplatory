@@ -10,7 +10,7 @@ This collection features small, exemplary tasks aimed at exploring various facet
 4. 🧸 [**Toy Story**](./toystory/README.md)
 5. 👾 [**Game Of Life**](game-of-life)
 6. 🚚 [**Truck It**](truck-it)
-7. 🐕 [**Corgi Dogs**](corgi-dgos)
+7. 🐕 [**Corgi Dogs**](corgi-dogs)
 
 ## Additional Notes
 
