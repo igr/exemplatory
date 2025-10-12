@@ -1,0 +1,2 @@
+run:
+    ucm run.file GameOfLife.u main

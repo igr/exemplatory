@@ -1,0 +1,115 @@
+-- Data types
+unique type Cell = Live | Dead
+
+unique type Position = { xx : Int, yy : Int }
+
+-- Show instances
+Cell.toText : Cell -> Text
+Cell.toText = cases
+  Live -> "*"
+  Dead -> "."
+
+-- Grid dimensions
+width : Int
+width = +10
+
+height : Int
+height = +10
+
+-- Initialize the grid with a default state
+initializeGrid : (Position -> Cell) -> [[Cell]]
+initializeGrid getState =
+  List.range 0 (truncate0 height)
+    |> List.map (y ->
+        List.range 0 (truncate0 width)
+        |> List.map (x -> getState (Position (Nat.toInt x) (Nat.toInt y))))
+
+-- Seed function that returns Live for positions where x + y is even, otherwise Dead
+seedStateFn : Position -> Cell
+seedStateFn pos =
+  if isEven (Position.xx pos + Position.yy pos) then Live else Dead
+
+-- Collect the neighbors of a given cell
+collectNeighbors : Position -> [Position]
+collectNeighbors pos =
+  deltas = [-1, +0, +1]
+  List.flatMap (dx ->
+    List.flatMap (dy ->
+      let
+        x = Position.xx pos
+        y = Position.yy pos
+        nx = x + dx
+        ny = y + dy
+        if (dx Int.== +0 && dy Int.== +0) then []
+        else if (nx < +0 || nx >= width || ny < +0 || ny >= height) then []
+        else [Position nx ny]) deltas) deltas
+
+-- Count live neighbors of a given cell
+countLiveNeighbors : [[Cell]] -> Position -> Nat
+countLiveNeighbors grid pos =
+  neighbors = collectNeighbors pos
+  liveCount = List.filter (neighbor ->
+    let
+      nx = Position.xx neighbor
+      ny = Position.yy neighbor
+      cellOpt = Optional.flatMap (row -> List.at (truncate0 nx) row) (List.at (truncate0 ny) grid)
+      cell = Optional.getOrElse Dead cellOpt
+      cell === Live) neighbors
+  List.size liveCount
+
+-- Determine the next state of a cell
+nextState : Cell -> Nat -> Cell
+nextState currentCell liveNeighbors =
+  match currentCell with
+    Live ->
+      if liveNeighbors < 2 then Dead
+      else if liveNeighbors === 2 || liveNeighbors === 3 then Live
+      else Dead
+    Dead ->
+      if liveNeighbors === 3 then Live
+      else Dead
+
+-- Generate the next grid
+nextGeneration : [[Cell]] -> [[Cell]]
+nextGeneration grid =
+  List.range 0 (truncate0 height)
+    |> List.map (y ->
+      List.range 0 (truncate0 width)
+        |> List.map (x ->
+          let
+            xi = Nat.toInt x
+            yi = Nat.toInt y
+            cellOpt = Optional.flatMap (row -> List.at x row) (List.at y grid)
+            cell = Optional.getOrElse Dead cellOpt
+            liveCount = countLiveNeighbors grid (Position xi yi)
+            nextState cell liveCount))
+
+-- Create a grid
+buildGrid : [[Cell]]
+buildGrid = initializeGrid seedStateFn
+
+-- Print the grid for visualization
+printGrid : [[Cell]] -> Text
+printGrid grid =
+  rows = List.map (row ->
+    List.map Cell.toText row |> Text.join "") grid
+  Text.join "\n" rows
+
+-- Generate and print N generations
+goLife : Nat -> Nat -> [[Cell]] -> {IO, Exception} ()
+goLife maxGen n grid =
+  if n === 0 then ()
+  else
+    nextGrid = nextGeneration grid
+    printLine ("\nGeneration " ++ Nat.toText (maxGen Nat.- n + 1) ++ ":")
+    printLine (printGrid nextGrid)
+    goLife maxGen (n Nat.- 1) nextGrid
+
+-- Main function
+main : '{IO, Exception} ()
+main = do
+  grid' = buildGrid
+  printLine "\nSeed Grid:"
+  printLine (printGrid grid')
+  numGenerations = 6
+  goLife numGenerations numGenerations grid'
