@@ -27,7 +27,9 @@ initializeGrid getState =
 -- Seed function that returns Live for positions where x + y is even, otherwise Dead
 seedStateFn : Position -> Cell
 seedStateFn pos =
-  if isEven (Position.xx pos + Position.yy pos) then Live else Dead
+  match isEven (Position.xx pos + Position.yy pos) with
+    true -> Live
+    false -> Dead
 
 -- Collect the neighbors of a given cell
 collectNeighbors : Position -> [Position]
