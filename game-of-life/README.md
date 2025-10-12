@@ -17,6 +17,10 @@ Your task is to generate `N` generations of a life game.
 
 > Simple implementation w/o any surprise. Holding a state in a double array, creating one generation after the another.
 
+⭐️ [unison](unison) (by @igr)
+
+> Port of Haskell implementation to Unison. Since this is my first Unison program, I might have missed some Unison features.
+
 ⭐️ [actors](tatsugo) (by @igr)
 
-> Actor-alike implementation in my particles engine: Tatsugo. The code is understandable, even if you never saw the engine.
+> Actor-alike implementation in my particles engine: Tatsugo. The code is understandable, even if you never saw the engine before.
