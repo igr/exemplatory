@@ -13,6 +13,10 @@ Your task is to generate `N` generations of a life game.
 
 ## Solutions
 
+⭐️ [gleam](gleam) (by @igr)
+
+> Simple implementation w/o any surprise.
+
 ⭐️ [haskell](haskell) (by @igr)
 
 > Simple implementation w/o any surprise. Holding a state in a double array, creating one generation after the another.
